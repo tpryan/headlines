@@ -2,6 +2,7 @@ package headlines
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"math/rand"
 )
@@ -15,6 +16,10 @@ type Headline struct {
 	Location string
 	Verb     string
 	Object   string
+}
+
+func (h Headline) Sprintln() string {
+	return fmt.Sprintf("Today, %s in %s %s %s.\n", h.Subject, h.Location, h.Verb, h.Object)
 }
 
 type RandomList []string

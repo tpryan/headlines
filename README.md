@@ -1,3 +1,13 @@
+# Headlines
+
+This is a simple little application that generates headlines based on random
+strings contained in data files. It acts to create MabLibs-like sentences
+that mimic some of the nonsense headlines we've been having since 2020 started. 
+
+## Example
+
+``` golang
+
 package main
 
 import (
@@ -24,3 +34,6 @@ func main() {
 	fmt.Printf("%s\n", h.Sprintln())
 
 }
+```
+
+_This is not an official Google Product._

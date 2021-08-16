@@ -19,7 +19,7 @@ type Headline struct {
 }
 
 func (h Headline) Sprintln() string {
-	return fmt.Sprintf("Today, %s in %s %s %s.\n", h.Subject, h.Location, h.Verb, h.Object)
+	return fmt.Sprintf("Today, %s in %s %s %s.", h.Subject, h.Location, h.Verb, h.Object)
 }
 
 type RandomList []string

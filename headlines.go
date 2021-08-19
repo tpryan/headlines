@@ -5,11 +5,17 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"time"
 )
 
-var cache map[string]RandomList
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
+var cache map[string]RandomList
 var types = []string{"subject", "location", "verb", "object"}
+
+var ErrNotLoaded = fmt.Errorf("headline cache was not initialized")
 
 type Headline struct {
 	Subject  string
@@ -18,30 +24,32 @@ type Headline struct {
 	Object   string
 }
 
-func (h Headline) Sprintln() string {
+func (h Headline) Sprint() string {
 	return fmt.Sprintf("Today, %s in %s %s %s.", h.Subject, h.Location, h.Verb, h.Object)
+}
+
+func New() (Headline, error) {
+	r := Headline{}
+
+	if len(cache) == 0 {
+		return r, ErrNotLoaded
+	}
+
+	r.Location = cache["location"].Get()
+	r.Object = cache["object"].Get()
+	r.Subject = cache["subject"].Get()
+	r.Verb = cache["verb"].Get()
+	return r, nil
 }
 
 type RandomList []string
 
-func (r RandomList) GetValue() string {
+func (r RandomList) Get() string {
 	min := 0
 	max := len(r) - 1
 	i := rand.Intn(max-min+1) + min
 
 	return r[i]
-}
-
-func NewHeadline() (Headline, error) {
-
-	r := Headline{}
-
-	r.Location = cache["location"].GetValue()
-	r.Object = cache["object"].GetValue()
-	r.Subject = cache["subject"].GetValue()
-	r.Verb = cache["verb"].GetValue()
-
-	return r, nil
 }
 
 func LoadCache(dir string) error {
@@ -64,11 +72,10 @@ func loadFile(path string) ([]string, error) {
 	if err != nil {
 		return []string{}, err
 	}
-	var slice RandomList
-	err = json.Unmarshal(data, &slice)
-	if err != nil {
+	var l RandomList
+	if err = json.Unmarshal(data, &l); err != nil {
 		return []string{}, err
 	}
 
-	return slice, nil
+	return l, nil
 }

@@ -2,25 +2,21 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
-	"time"
 
 	"github.com/tpryan/headlines"
 )
 
 func main() {
 
-	rand.Seed(time.Now().UnixNano())
+	if err := headlines.LoadCache("../../data"); err != nil {
+		fmt.Printf("err: %s\n", err)
+	}
 
-	err := headlines.LoadCache("../../data")
+	h, err := headlines.New()
 	if err != nil {
 		fmt.Printf("err: %s\n", err)
 	}
 
-	h, err := headlines.NewHeadline()
-	if err != nil {
-		fmt.Printf("err: %s\n", err)
-	}
-	fmt.Printf("%s\n", h.Sprintln())
+	fmt.Printf("%s\n", h.Sprint())
 
 }

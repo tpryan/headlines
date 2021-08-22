@@ -20,7 +20,6 @@ var (
 var ErrNotLoaded = fmt.Errorf("headline cache was not initialized")
 
 func init() {
-	fmt.Printf("Random seed generated: \n")
 	rand.Seed(time.Now().UnixNano())
 }
 

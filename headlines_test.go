@@ -7,7 +7,6 @@ import (
 )
 
 func TestLoadFileEmpty(t *testing.T) {
-
 	errEmpty := fmt.Errorf("open : no such file or directory")
 
 	_, err := loadFile("")
@@ -19,11 +18,9 @@ func TestLoadFileEmpty(t *testing.T) {
 	if err.Error() != errEmpty.Error() {
 		t.Errorf("Expected error (%s), but got (%s)", errEmpty, err)
 	}
-
 }
 
 func TestLoadFileNotJson(t *testing.T) {
-
 	errEmpty := fmt.Errorf("invalid character 'p' looking for beginning of value")
 
 	_, err := loadFile("headlines_test.go")
@@ -35,11 +32,17 @@ func TestLoadFileNotJson(t *testing.T) {
 	if err.Error() != errEmpty.Error() {
 		t.Errorf("Expected error (%s), but got (%s)", errEmpty, err)
 	}
+}
 
+func TestLoadMissingData(t *testing.T) {
+	expect := fmt.Errorf("open data/missingdata/verb.json: no such file or directory")
+
+	if err := LoadCache("data/missingdata"); err.Error() != expect.Error() {
+		t.Errorf("Expected error (%s), but got (%s)", expect, err)
+	}
 }
 
 func TestLoadCacheEmpty(t *testing.T) {
-
 	errNotEmpty := fmt.Errorf("open /subject.json: no such file or directory")
 
 	err := LoadCache("")
@@ -51,11 +54,9 @@ func TestLoadCacheEmpty(t *testing.T) {
 	if err.Error() != errNotEmpty.Error() {
 		t.Errorf("Expected error (%s), but got (%s)", errNotEmpty, err)
 	}
-
 }
 
 func TestNewUnloaded(t *testing.T) {
-
 	_, err := New()
 
 	if err == nil {
@@ -65,13 +66,11 @@ func TestNewUnloaded(t *testing.T) {
 	if err != ErrNotLoaded {
 		t.Errorf("Expected error (%s), but got (%s)", ErrNotLoaded, err)
 	}
-
 }
 
 func TestNew(t *testing.T) {
-
 	if err := LoadCache("data"); err != nil {
-		fmt.Printf("err: %s\n", err)
+		t.Errorf("cound not load test data: %s", err)
 	}
 
 	cases := []struct {
@@ -93,5 +92,4 @@ func TestNew(t *testing.T) {
 		}
 
 	}
-
 }

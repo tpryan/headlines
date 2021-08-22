@@ -6,7 +6,8 @@ that mimic some of the nonsense headlines we've been having since 2020 started.
 
 ## Extending
 The folder `data` contains a series of files that contains lists of different
-types.  
+types. You can add more random headline parts here to make more headline
+possibilities.  
 
 ## Example
 

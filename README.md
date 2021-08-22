@@ -4,6 +4,10 @@ This is a simple little application that generates headlines based on random
 strings contained in data files. It acts to create MabLibs-like sentences
 that mimic some of the nonsense headlines we've been having since 2020 started. 
 
+## Extending
+The folder `data` contains a series of files that contains lists of different
+types.  
+
 ## Example
 
 ``` golang
@@ -20,7 +24,6 @@ import (
 
 func main() {
 
-	rand.Seed(time.Now().UnixNano())
 
 	err := headlines.LoadCache("../../data")
 	if err != nil {

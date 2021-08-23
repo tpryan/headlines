@@ -31,11 +31,11 @@ func main() {
 		fmt.Printf("err: %s\n", err)
 	}
 
-	h, err := headlines.NewHeadline()
+	h, err := headlines.New()
 	if err != nil {
 		fmt.Printf("err: %s\n", err)
 	}
-	fmt.Printf("%s\n", h.Sprintln())
+	fmt.Printf("%s\n", h.Sprint())
 
 }
 ```
